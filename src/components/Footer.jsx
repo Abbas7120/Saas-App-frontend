@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import { assets } from "../assets/assets";
 
 const Footer = () => {
@@ -5,28 +6,29 @@ const Footer = () => {
     <footer className="px-6 md:px-16 lg:px-24 xl:px-32 pt-8 w-full text-gray-500 mt-20">
       <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500/30 pb-6">
         <div className="md:max-w-96">
-          <img className="h-9" src={assets.logo} alt="logo" />
+     <span className="font-display text-xl font-bold text-foreground">CareerAI</span>
+     
           <p className="mt-6 text-sm">
-            Experience the power of AI with QuickAi. <br /> Transform you
+            Experience the power of AI with CareerAI. <br /> Transform you
             content creation with our suite of premium AI tools. Write articles,
-            generate images, and enhance your workflow.
+            generate images,check ATS,build your resume and enhance your workflow.
           </p>
         </div>
         <div className="flex-1 flex items-start md:justify-end gap-20">
           <div>
-            <h2 className="font-semibold mb-5 text-gray-800">Company</h2>
+            <h2 className="font-semibold mb-5 text-gray-800">Our Tools </h2>
             <ul className="text-sm space-y-2">
               <li>
-                <a href="#">Home</a>
+                <a href="#">Resume Builder</a>
               </li>
               <li>
-                <a href="#">About us</a>
+                <a href="#">ATS Checker</a>
               </li>
               <li>
-                <a href="#">Contact us</a>
+                <a href="#">BG Removal</a>
               </li>
               <li>
-                <a href="#">Privacy policy</a>
+                <a href="#">Headshot Generator</a>
               </li>
             </ul>
           </div>
@@ -36,7 +38,7 @@ const Footer = () => {
             </h2>
             <div className="text-sm space-y-2">
               <p>
-                The latest news, articles, and resources, sent to your inbox
+                The latest news, articles, and resources related to jobs sent to your inbox
                 weekly.
               </p>
               <div className="flex items-center gap-2 pt-4">
@@ -45,7 +47,7 @@ const Footer = () => {
                   type="email"
                   placeholder="Enter your email"
                 />
-                <button className="bg-primary w-24 h-9 text-white rounded cursor-pointer">
+                <button className=" w-24 h-9 text-black border border-gray-500/30 rounded cursor-pointer">
                   Subscribe
                 </button>
               </div>
@@ -56,7 +58,7 @@ const Footer = () => {
       <p className="pt-4 text-center text-xs md:text-sm pb-5">
         Copyright 2025 ©{" "}
         <a target="_blank" href="">
-          Arry Aryan
+        Team HACKWAVE
         </a>
         . All Right Reserved.
       </p>

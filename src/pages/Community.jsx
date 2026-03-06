@@ -29,8 +29,8 @@ const Community = () => {
     //   toast.error(error.message);
     // }
     // setLoading(false);
-     
-    setCreations(dummyPublishedCreationData)
+
+    setCreations(dummyPublishedCreationData);
   };
 
   // const imageLikeToggle = async (id) => {
@@ -76,14 +76,15 @@ const Community = () => {
             />
             <div
               className="absolute bottom-0 top-0 right-0 left-3 flex gap-2  items-end justiy-end group-hover:justify-between p-3
-            group-hover:bg-gradient-to-b from-transparent to-black/80 text-white rounded-lg"
+            group-hover:bg-blue-600-to-b from-transparent to-black/80 text-white rounded-lg"
             >
               <p className="text-sm hidden group-hover:block">
                 {creation.prompt}
               </p>
               <div className="flex gap-1 items-center">
                 <p>{creation.likes.length}</p>
-                <Heart onClick={()=>imageLikeToggle(creation._id)}
+                <Heart
+                  onClick={() => imageLikeToggle(creation._id)}
                   className={`min-w-5 h-5 hover:scale-110 cursor-pointer ${creation.likes.includes(user.id) ? "fill-red-500 text-red-600" : "text-white"}`}
                 />
               </div>
@@ -92,7 +93,7 @@ const Community = () => {
         ))}
       </div>
     </div>
-  )
+  );
 };
 
 export default Community;

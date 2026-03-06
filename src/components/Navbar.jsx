@@ -1,34 +1,78 @@
-import { useNavigate } from "react-router-dom";
-import { assets } from "../assets/assets";
-import { ArrowRight } from "lucide-react";
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+// import { useNavigate } from "react-router-dom";
+// import { assets } from "../assets/assets";
+// import { ArrowRight } from "lucide-react";
+// import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+
+// const Navbar = () => {
+//   const navigate = useNavigate();
+
+//   const { user } = useUser();
+//   const { openSignIn } = useClerk();
+
+//   return (
+//     <div className="fixed z-5 w-full backdrop-blur-2xl flex justify-between items-center py-3 px-4 sm:px-20 xl:px-32 cursor-pointer">
+//       <img
+//         onClick={() => navigate("/")}
+//         src={assets.logo}
+//         alt="logo"
+//         className="w-32 sm:w-44 cursor-pointer"
+//       />
+
+//       {user ? (
+//         <UserButton />
+//       ) : (
+//         <button
+//           onClick={openSignIn}
+//           className="flex items-center gap-2 rounded-full text-sm cursor-pointer bg-primary text-white px-10 py-2.5"
+//         >
+//           Get started <ArrowRight className="w-4 h-4" />
+//         </button>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Navbar;
+
+import { Link, useLocation } from "react-router-dom";
+import { Sparkles } from "lucide-react";
+
+const btn =
+  "inline-flex items-center justify-center gap-2 rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
+const ghost = `${btn} bg-blue-400 text-white hover:bg-accent hover:text-accent-foreground h-9 px-3 `;
+const hero = `${btn} bg-blue-400 text-primary-foreground font-semibold shadow-lg hover:opacity-90 h-9 px-3`;
 
 const Navbar = () => {
-  const navigate = useNavigate();
-
-  const { user } = useUser();
-  const { openSignIn } = useClerk();
+  const location = useLocation();
+  const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
-    <div className="fixed z-5 w-full backdrop-blur-2xl flex justify-between items-center py-3 px-4 sm:px-20 xl:px-32 cursor-pointer">
-      <img
-        onClick={() => navigate("/")}
-        src={assets.logo}
-        alt="logo"
-        className="w-32 sm:w-44 cursor-pointer"
-      />
+    <nav className="sticky top-0 z-50 border-b border-border glass">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 flex h-16 items-center justify-between">
+        <Link to="/" className="flex items-center gap-2">
+          <div className=" rounded-lg p-1.5">
+            <Sparkles className="h-5 w-5 text-card bg-white" />
+          </div>
+          <span className="font-display text-xl font-bold text-foreground">
+            CareerAI
+          </span>
+        </Link>
 
-      {user ? (
-        <UserButton />
-      ) : (
-        <button
-          onClick={openSignIn}
-          className="flex items-center gap-2 rounded-full text-sm cursor-pointer bg-primary text-white px-10 py-2.5"
-        >
-          Get started <ArrowRight className="w-4 h-4" />
-        </button>
-      )}
-    </div>
+        <div className="flex items-center gap-3">
+          {isDashboard ? (
+            <Link to="/" className={ghost}>
+              Home
+            </Link>
+          ) : (
+            <>
+              <Link to="/dashboard" className={hero}>
+                Get Started
+              </Link>
+            </>
+          )}
+        </div>
+      </div>
+    </nav>
   );
 };
 
