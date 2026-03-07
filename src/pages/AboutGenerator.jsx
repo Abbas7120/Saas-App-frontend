@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, User, Loader2, Copy, Check } from "lucide-react";
 // import { callAITool } from "@/lib/ai";
+import { postJSON } from "../lib/api"
 import { toast } from "sonner";
 
 const btn =
@@ -34,13 +35,23 @@ const AboutGenerator = () => {
       return;
     }
     setLoading(true);
-    //     try {
-    //       const res = await callAITool("about-generator", form);
-    //       setResult(res);
-    //       toast.success("About sections generated!");
-    //     } catch (err) { toast.error(err.message); } finally { setLoading(false); }
-    //
+        try {
+        const res = await postJSON("/api/about/generate", {
+fullName: form.name,
+targetRole: form.role,
+keySkills: form.skills,
+experience: form.experience,
+careerGoals: form.goals,
+tone: form.tone
+})
+setResult(res.bio)
+toast.success("About sections generated!")
+        } catch (err) { toast.error(err.message); } finally { setLoading(false); }
+    
   };
+
+  
+// setResult(res.bio)
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(result);

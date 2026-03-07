@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ScanSearch, Loader2, Copy, Check } from "lucide-react";
 // import { callAITool } from "@/lib/ai";
+import { postJSON } from "../lib/api"
 import { toast } from "sonner";
 
 const btn =
@@ -19,24 +20,57 @@ const ATSChecker = () => {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!resume.trim()) {
-      toast.error("Please paste your resume");
-      return;
-    }
-    setLoading(true);
-    // try {
-    //   const res = await callAITool("ats-checker", { resume, jobDescription });
-    //   setResult(res);
-    //   toast.success("Analysis complete!");
-    // } catch (err) {
-    //   toast.error(err.message);
-    // } finally {
-    //   setLoading(false);
-    // }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   if (!resume.trim()) {
+  //     toast.error("Please paste your resume");
+  //     return;
+  //   }
+  //   setLoading(true);
+  //   // try {
+  //   //   const res = await callAITool("ats-checker", { resume, jobDescription });
+  //   //   setResult(res);
+  //   //   toast.success("Analysis complete!");
+  //   // } catch (err) {
+  //   //   toast.error(err.message);
+  //   // } finally {
+  //   //   setLoading(false);
+  //   // }
+  // };
 
+  const handleSubmit = async (e) => {
+
+e.preventDefault()
+
+if (!resume.trim()) {
+toast.error("Please paste your resume")
+return
+}
+
+setLoading(true)
+
+try {
+
+const res = await postJSON("/api/ats/analyze-text", {
+resumeContent: resume,
+jobDescription
+})
+
+setResult(res.analysis)
+
+toast.success("Analysis complete!")
+
+} catch (err) {
+
+toast.error(err.message)
+
+} finally {
+
+setLoading(false)
+
+}
+
+}
   const copyToClipboard = () => {
     navigator.clipboard.writeText(result);
     setCopied(true);

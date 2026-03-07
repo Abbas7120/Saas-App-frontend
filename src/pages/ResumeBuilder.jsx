@@ -2,7 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, FileText, Loader2, Copy, Check } from "lucide-react";
-// import { callAITool } from "@/lib/ai";
+import { postJSON } from "../lib/api"
 import { toast } from "sonner";
 
 const btn =
@@ -27,23 +27,43 @@ const ResumeBuilder = () => {
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!form.name || !form.education || !form.skills) {
-      toast.error("Please fill in name, education, and skills");
-      return;
-    }
-    setLoading(true);
-    // try {
-    //   const res = await callAITool("resume-builder", form);
-    //   setResult(res);
-    //   toast.success("Resume generated!");
-    // } catch (err) {
-    //   toast.error(err.message || "Failed to generate resume");
-    // } finally {
-    //   setLoading(false);
-    // }
-  };
+const handleSubmit = async (e) => {
+
+e.preventDefault()
+
+if (!form.name || !form.education || !form.skills) {
+toast.error("Please fill required fields")
+return
+}
+
+setLoading(true)
+
+try {
+
+const res = await postJSON("/api/resumes/generate", {
+fullName: form.name,
+email: form.email,
+education: form.education,
+skills: form.skills,
+experience: form.experience,
+projects: form.projects
+})
+
+setResult(res.resume)
+
+toast.success("Resume generated!")
+
+} catch (err) {
+
+toast.error(err.message)
+
+} finally {
+
+setLoading(false)
+
+}
+
+}
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(result);

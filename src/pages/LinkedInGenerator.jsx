@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Linkedin, Loader2, Copy, Check } from "lucide-react";
 // import { callAITool } from "@/lib/ai";
+import { postJSON } from "../lib/api"
 import { toast } from "sonner";
 
 const btn =
@@ -32,12 +33,18 @@ const LinkedInGenerator = () => {
       return;
     }
     setLoading(true);
-    //     try {
-    //       const res = await callAITool("linkedin-post", form);
-    //       setResult(res);
-    //       toast.success("Posts generated!");
-    //     } catch (err) { toast.error(err.message); } finally { setLoading(false); }
-    //
+        try {
+         const res = await postJSON("/api/linkedin/generate", {
+topic: form.topic,
+tone: form.tone,
+contentType: form.type
+})
+
+setResult(res.post)
+          // setResult(res);
+          toast.success("Posts generated!");
+        } catch (err) { toast.error(err.message); } finally { setLoading(false); }
+    
   };
 
   const copyToClipboard = () => {
