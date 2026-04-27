@@ -3,6 +3,6 @@ const router = express.Router()
 
 const { analyzeResume } = require("../controllers/ats.controller")
 
-router.post("/analyze-text", analyzeResume)
+router.post("/ats-check", analyzeResume)
 
 module.exports = router

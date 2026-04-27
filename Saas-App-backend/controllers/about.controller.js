@@ -1,25 +1,37 @@
-const { generateAI } = require("../services/gemini.service")
 
-exports.generateBio = async(req,res)=>{
+const { generateWithMistral } = require("../services/mistral.service")
+const { generateWithGemini } = require("../services/gemini.service")
 
-const { fullName,targetRole,keySkills,experience,careerGoals,tone } = req.body
+exports.generateBio = async (req, res) => {
+  const { fullName, targetRole, keySkills, experience, careerGoals, tone } = req.body
 
-const prompt = `
-Write a LinkedIn About section.
+  const prompt = `You are a professional LinkedIn profile writer. Write a LinkedIn About section for this person.
 
-Name:${fullName}
-Role:${targetRole}
-Skills:${keySkills}
-Experience:${experience}
-Goals:${careerGoals}
+Name: ${fullName}
+Target Role: ${targetRole}
+Key Skills: ${keySkills}
+Experience: ${experience}
+Career Goals: ${careerGoals}
+Tone: ${tone}
 
-Tone:${tone}
+Rules you MUST follow:
+- Output ONLY the bio text — no preamble, no "Here's your bio", no "Sure!", no labels, no commentary
+- Start directly with the first sentence of the bio
+- 3–5 sentences, punchy and human-sounding
+- Do not wrap in quotes or markdown
 
-Generate 3 variations.
+Now write the bio:
 `
 
-const bio = await generateAI(prompt)
+  let bio = ""
 
-res.json({bio})
+  try {
+    console.log("[Bio] Trying Mistral...")
+    bio = await generateWithMistral(prompt)
+  } catch (mistralErr) {
+    console.warn("[Bio] Mistral failed:", mistralErr.message, "— switching to Gemini")
+    bio = await generateWithGemini(prompt)
+  }
 
+  res.json({ bio: bio.trim() })
 }

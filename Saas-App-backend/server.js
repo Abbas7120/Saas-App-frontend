@@ -9,8 +9,8 @@ const resumeRoutes = require("./routes/resume.routes")
 const atsRoutes = require("./routes/ats.routes")
 const linkedinRoutes = require("./routes/linkedin.routes")
 const aboutRoutes = require("./routes/about.routes")
-// const imageRoutes = require("./routes/image.routes")
-
+const imageRoutes = require("./routes/image.routes")
+const aiRoutes=require("./routes/ai.routes")
 const app = express()
 
 app.use(cors())
@@ -20,8 +20,10 @@ app.use("/api/resumes",resumeRoutes)
 app.use("/api/ats",atsRoutes)
 app.use("/api/linkedin",linkedinRoutes)
 app.use("/api/about",aboutRoutes)
-// app.use("/api/image",imageRoutes)
+app.use("/api/image",imageRoutes)
 
+
+//app.use("/api/ai",aiRoutes)
 async function start(){
 
 await initDB()
